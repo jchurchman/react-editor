@@ -11,23 +11,41 @@ class App extends Component {
       message: props.initialMessage,
       color: '#4682b4',
       fontSize: 16,
-      border: false,
+      borderBool: false,
+      border: 'none',
       posLeft: '10px',
       posTop: '10px'
     }
   }
 
   handleChange({name, value}) {
-    this.setState({
-      [name]: value
-    });
+    if(name==='border'&&value==='false'){
+      console.log(value)
+      this.setState({
+        borderBool: true,
+        border: {
+          width: '3px',
+          color: '#aaa',
+          style: 'solid'
+        }
+      })
+    } else if(name==='border'&&value==='true') {
+      console.log(value)
+      this.setState({
+        borderBool: false,
+        border: 'none'
+      })
+    } else {
+      this.setState({
+        [name]: value
+      });
+    }
   }
 
   jumpAround() {
-    console.log('mousedover');
     this.setState({
-      posLeft: `${Math.floor(Math.random()*80)}px`,
-      posTop: `${Math.floor(Math.random()*20)}px`
+      posLeft: `${Math.floor(Math.random()*400)}px`,
+      posTop: `${Math.floor(Math.random()*40)}px`
     })
   }
 
@@ -58,15 +76,18 @@ class App extends Component {
             <input name="fontSize" value={this.state.fontSize} type="range" min="16" max="160" step="16"
             onChange={({ target }) => this.handleChange(target)}/>
           </label>
-          {/* <label>
+          <label>
             Border:
-            <input name="border" value={this.state.border} type="checkbox"
+            <input name="border" value={this.state.borderBool} type="checkbox"
             onChange={({ target }) => this.handleChange(target)}/>
-          </label> */}
+          </label> 
         </div>
         <div className="display" style={{
           color: this.state.color,
-          fontSize: this.state.fontSize
+          fontSize: this.state.fontSize,
+          borderWidth: this.state.border.width,
+          borderStyle: this.state.border.style,
+          borderColor: this.state.border.color
         }}>
           {this.state.message}
         </div>
