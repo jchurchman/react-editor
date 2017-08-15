@@ -11,6 +11,8 @@ class App extends Component {
       message: props.initialMessage,
       color: '#4682b4',
       fontSize: 16,
+      fontStyle: 'none',
+      fontWeight: 'normal',
       borderBool: false,
       border: 'none',
       posLeft: '10px',
@@ -20,7 +22,6 @@ class App extends Component {
 
   handleChange({name, value}) {
     if(name==='border'&&value==='false'){
-      console.log(value)
       this.setState({
         borderBool: true,
         border: {
@@ -30,7 +31,6 @@ class App extends Component {
         }
       })
     } else if(name==='border'&&value==='true') {
-      console.log(value)
       this.setState({
         borderBool: false,
         border: 'none'
@@ -54,7 +54,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" 
-          onMouseEnter={({ target }) => this.jumpAround()} style={{
+          onMouseEnter={() => this.jumpAround()} style={{
             left: this.state.posLeft,
             top: this.state.posTop
           }}/>
@@ -81,13 +81,29 @@ class App extends Component {
             <input name="border" value={this.state.borderBool} type="checkbox"
             onChange={({ target }) => this.handleChange(target)}/>
           </label> 
+          <form>
+            Font Style:
+            <input name="fontStyle" value="oblique" type="radio"
+            onClick={({ target }) => this.handleChange(target)}/> Italic
+            <input name="fontStyle" value="normal" type="radio"
+            onClick={({ target }) => this.handleChange(target)}/> None
+          </form> 
+          <form>
+            Font Weight:
+            <input name="fontWeight" value="bold" type="radio"
+            onClick={({ target }) => this.handleChange(target)}/> Bold
+            <input name="fontWeight" value="normal" type="radio"
+            onClick={({ target }) => this.handleChange(target)}/> Normal
+          </form> 
         </div>
         <div className="display" style={{
           color: this.state.color,
           fontSize: this.state.fontSize,
           borderWidth: this.state.border.width,
           borderStyle: this.state.border.style,
-          borderColor: this.state.border.color
+          borderColor: this.state.border.color,
+          fontStyle: this.state.fontStyle,
+          fontWeight: this.state.fontWeight
         }}>
           {this.state.message}
         </div>
